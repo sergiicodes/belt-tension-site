@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Belt Tensioning Calculator</title>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+        </style>
+
+        <style>
+            /* Global Styles */
+            body {
+                font-family: 'Quicksand', sans-serif;
+                margin: 20px;
+                background-color: #f5f5f5;
+            }
+
+            /* Container Styles */
+            .container {
+                max-width: 400px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: #fff;
+                border-radius: 5px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                text-align: center;
+            }
+
+            h1 {
+                text-align: center;
+            }
+
+            form {
+                margin-bottom: 20px;
+                width: 12%;
+                margin: 0 auto;
+            }
+
+            /* Button Styles */
+            button {
+                display: block;
+                width: 100%;
+                margin-top: 10px;
+                padding: 10px;
+                border: none;
+                border-radius: 20px;
+                background: linear-gradient(to right, #348f50, #56b4d3);
+                color: #fff;
+                font-size: 16px;
+                font-weight: bold;
+                box-shadow: 0 4px 12px 0 rgba(152, 160, 180, 10);
+                cursor: pointer;
+                transition: transform 0.2s;
+                font-family: 'Quicksand', sans-serif;
+            }
+
+            button:hover {
+                background-position: right center;
+                transform: scale(1.15);
+            }
+
+            /* Result Styles */
+            #result {
+                padding: 10px;
+                background-color: #f1f1f1;
+                border-radius: 5px;
+                text-align: center;
+            }
+
+            /* Input Styles */
+            label {
+                display: block;
+                margin-top: 10px;
+            }
+
+            .input-container {
+                width: 100%;
+                margin-bottom: 10px;
+                position: relative;
+            }
+
+            input[type="text"],
+            input[type="number"],
+            select {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+                font-size: 16px;
+                padding-right: 40px;
+            }
+
+            .unit-label {
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                pointer-events: none;
+                font-size: 14px;
+            }
+        </style>
+
+
+    </head>
+
+    <body>
+        <h1>Belt Tensioning Calculator</h1>
+
+        <form id="tensioning-form">
+            <div class="input-container">
+                <label for="span-input">Span Length:</label>
+                <div class="input-field">
+                    <input step="any" type="number" id="span-input" required>
+                    <span class="unit-label">mm</span>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <label for="brand-input">Belt Brand:</label>
+                <select id="brand-input">
+                    <option value="0.0058">BrecoFlex</option>
+                    <option value="0.00667">Browning</option>
+                    <option value="0.0023">F.N. Sheppard</option>
+                    <option value="0.0006">Gates GT Carbon</option>
+                    <option value="0.006">PolyTech</option>
+                    <option value="0.0055">Habasit 8EHDV</option>
+                </select>
+            </div>
+
+            <div class="input-container">
+                <label for="width-input">Belt Width:</label>
+                <input step="any" type="number" id="width-input" required>
+                <span class="unit-label">mm</span>
+            </div>
+
+            <div class="input-container">
+                <label for="pulley-input">Pulley Diameter:</label>
+                <input step="any" type="number" id="pulley-input" required>
+                <span class="unit-label">mm</span>
+            </div>
+
+            <div class="input-container">
+                <label for="torque-input">RMS Torque:</label>
+                <input step="any" type="number" id="torque-input" required>
+                <span class="unit-label">N*m</span>
+            </div>
+
+            <button type="submit">Calculate</button>
+        </form>
+
+        <div id="result"></div>
+
+        <script>
+            // Inline JavaScript code
+            // Function to handle form submission
+            function calculateTension(event) {
+                event.preventDefault();
+
+                // Get form input values
+                const span = parseFloat(document.getElementById("span-input").value);
+                const brand = document.getElementById("brand-input").value;
+                const width = parseFloat(document.getElementById("width-input").value);
+                const pulley = parseFloat(document.getElementById("pulley-input").value);
+                const torque = parseFloat(document.getElementById("torque-input").value);
+
+                // Calculate tension and frequency
+                const tension = torque / (pulley / 2000);
+                const frequency = Math.sqrt(tension / (width * brand * 4 * ((span / 1000) ** 2)));
+
+                // Calculate margins
+                const margin = 0.05 * frequency;
+                const upperMargin = Math.ceil(frequency + margin);
+                const lowerMargin = Math.floor(frequency - margin);
+
+                // Display the result
+                const resultDiv = document.getElementById("result");
+                resultDiv.innerHTML = `<p>Frequency Range: ${lowerMargin} Hz - ${upperMargin} Hz</p>`;
+            }
+
+            // Attach the form submission handler
+            const form = document.getElementById("tensioning-form");
+            form.addEventListener("submit", calculateTension);
+        </script>
+    </body>
+</html>
