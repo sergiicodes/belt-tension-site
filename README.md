@@ -1,9 +1,8 @@
 # belt-tension-site
 
-This is a simple web calculator for calculating belt tension and frequency. It allows users to input various parameters such as span length, belt brand, belt width, pulley diameter, and RMS torque. The calculator then calculates the tension --> frequency based on the provided inputs.
-The motivation behind making this calculator was to be able to distribute and open-source the math behind preparing the belts used in manufacturing machines beyond just my role. In my job I usually am tasked with calculating the tension (N) required for the given application for a machine's belt drive to ensure that the belt drive does not fail.
+This is a simple web calculator for calculating belt tension and frequency. It allows users to input various parameters such as span length, belt brand, belt width, pulley diameter, and RMS torque. The calculator automates the calculation process, enabling the distribution and open-source sharing of belt preparation mathematics. This tool was developed to extend the accessibility of belt tension calculations beyond my specific role. As a professional involved in robotics and machines with belt drive applications, ensuring belt drive reliability by accurately calculating the required tension (N) is a critical responsibility.
 
-An example of a given system:
+Here's an example of a given system with a belt drive:
 
 ![image](https://github.com/sergiicodes/belt-tension-site/assets/79073281/729f2727-1244-4a67-b25a-5ed291337eaf)
 
